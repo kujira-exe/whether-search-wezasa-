@@ -29,6 +29,7 @@
     </div>
   </section>
 
+  <script src="https://cdn.geolonia.com/community-geocoder.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -39,23 +40,27 @@
       getWeatherButton.addEventListener('click', function () {
         const address = addressInput.value;
 
-        // 住所を使用してOpen-Meteo APIから天気情報を取得
-        // ここでは仮のデータを表示しています。本来はAPIを使用して取得する必要があります。
-        const weatherData = {
-          town: "西新宿",
-          city: "新宿区",
-          pref: "東京都",
-          maxTemperature: 7.8,
-          minTemperature: 1.9
-        };
+        // 住所の正規化
+        geolonia.normalize(address).then(normalizedAddress => {
+          // 正規化された住所情報をコンソールに表示（開発時に確認）
+          console.log(normalizedAddress);
 
-        // 天気情報を画面に表示
-        weatherResult.innerHTML = `<p>場所: ${weatherData.town}、${weatherData.city}、${weatherData.pref}</p>`;
-        weatherResult.innerHTML += `<p>最高気温: ${weatherData.maxTemperature}°C</p>`;
-        weatherResult.innerHTML += `<p>最低気温: ${weatherData.minTemperature}°C</p>`;
+          // TODO: Geolonia Community Geocoderに正規化された住所を渡して緯度経度を取得
+          // ...
 
-        // 天気情報を表示する部分を表示
-        weatherResult.classList.remove('is-hidden');
+          // TODO: 取得した緯度経度を使用してOpen-Meteo APIから天気情報を取得
+          // ...
+
+          // TODO: 天気情報を画面に表示
+          weatherResult.innerHTML = `<p>場所: ${normalizedAddress.town}、${normalizedAddress.city}、${normalizedAddress.pref}</p>`;
+          weatherResult.innerHTML += `<p>最高気温: 7.8°C</p>`;  // 仮のデータ、Open-Meteo APIから取得するように変更
+          weatherResult.innerHTML += `<p>最低気温: 1.9°C</p>`;  // 仮のデータ、Open-Meteo APIから取得するように変更
+
+          // 天気情報を表示する部分を表示
+          weatherResult.classList.remove('is-hidden');
+        }).catch(error => {
+          console.error("住所の正規化中にエラーが発生しました:", error.message);
+        });
       });
     });
   </script>
