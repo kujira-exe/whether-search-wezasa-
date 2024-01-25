@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>天気情報取得アプリ</title>
+  <!-- Bulma CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">天気情報取得アプリ</h1>
+
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <input id="addressInput" class="input" type="text" placeholder="住所を入力してください">
+        </div>
+        <div class="control">
+          <button id="getWeatherButton" class="button is-primary">天気取得</button>
+        </div>
+      </div>
+
+      <div id="weatherResult" class="notification is-hidden">
+        <!-- 天気情報が表示される部分 -->
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const addressInput = document.getElementById('addressInput');
+      const getWeatherButton = document.getElementById('getWeatherButton');
+      const weatherResult = document.getElementById('weatherResult');
+
+      getWeatherButton.addEventListener('click', function () {
+        const address = addressInput.value;
+
+        // 住所を使用してOpen-Meteo APIから天気情報を取得
+        // ここでは仮のデータを表示しています。本来はAPIを使用して取得する必要があります。
+        const weatherData = {
+          town: "西新宿",
+          city: "新宿区",
+          pref: "東京都",
+          maxTemperature: 7.8,
+          minTemperature: 1.9
+        };
+
+        // 天気情報を画面に表示
+        weatherResult.innerHTML = `<p>場所: ${weatherData.town}、${weatherData.city}、${weatherData.pref}</p>`;
+        weatherResult.innerHTML += `<p>最高気温: ${weatherData.maxTemperature}°C</p>`;
+        weatherResult.innerHTML += `<p>最低気温: ${weatherData.minTemperature}°C</p>`;
+
+        // 天気情報を表示する部分を表示
+        weatherResult.classList.remove('is-hidden');
+      });
+    });
+  </script>
+</body>
+
+</html>
